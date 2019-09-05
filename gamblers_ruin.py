@@ -117,7 +117,6 @@ class Tournament:
         banner_template = """
         Casino Setup
         ------------
-
         Player Count     :  {n_players}
         Games Per Player :  {games}
         Player Buy In    :  {bank}
@@ -155,10 +154,18 @@ class Tournament:
 
     def show_banner(self):
         banner = self.get_banner()
+        print(banner)
+
+    def show_end_of_game_holdings(self):
+        banner = """
+        
+
+        End of Game Holdings Per Player
+        -------------------------------"""
 
         print(banner)
-        print()
-        print(self._post_game_holdings)
+        for bank in self._post_game_holdings:
+            print('\t{0}'.format(bank))
 
 
 
@@ -173,6 +180,7 @@ if __name__ == "__main__":
     parser.add_argument('--win-probability', default=WIN_PROBABILITY, type=float, dest='win_prob')
     parser.add_argument('--win-multiplier', default=WIN_MULTIPLIER, type=float, dest='win_multiplier')
     parser.add_argument('--loss-multiplier', default=LOSS_MULTIPLIER, type=float, dest='loss_multiplier')
+    parser.add_argument('--show-eog-holdings', action='store_true', dest='show_eog_holdings')
 
     args = parser.parse_args()
 
@@ -184,3 +192,6 @@ if __name__ == "__main__":
 
     # report
     tournament.show_banner()
+
+    if args.show_eog_holdings:
+        tournament.show_end_of_game_holdings()
